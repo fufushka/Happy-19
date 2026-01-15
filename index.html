@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Happy 19th Birthday ❤️</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&family=Lato:wght@300;400&display=swap");
+
+      :root {
+        --bg-color: #f9f7f2; /* Колір старого паперу */
+        --accent: #d4a373; /* Золотисто-бежевий */
+        --text: #4a4a4a;
+        --pink: #eebbc3;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        background-image: radial-gradient(#e5e5e5 1px, transparent 1px);
+        background-size: 20px 20px; /* Крапочки на фоні */
+        font-family: "Lato", sans-serif;
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      /* --- 2. Типографіка --- */
+      h1,
+      h2 {
+        font-family: "Playfair Display", serif;
+        margin: 0;
+      }
+
+      .handwritten {
+        font-family: "Caveat", cursive;
+        color: var(--accent);
+        font-size: 1.5rem;
+      }
+
+      /* --- 3. Головний екран (Обкладинка) --- */
+      header {
+        height: 100vh;
+        height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        position: relative;
+      }
+
+      /* Декоративна рамка */
+      .frame {
+        border: 1px solid var(--accent);
+        padding: 40px;
+        position: relative;
+        animation: fadeIn 2s ease;
+      }
+      .frame::before,
+      .frame::after {
+        content: "🌸";
+        position: absolute;
+        font-size: 20px;
+      }
+      .frame::before {
+        top: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .frame::after {
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      header h1 {
+        font-size: 4rem;
+        color: #2c3e50;
+        line-height: 1;
+      }
+      header .sub {
+        font-size: 1.2rem;
+        margin-top: 20px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      .scroll-down {
+        position: absolute;
+        bottom: 30px;
+        animation: float 2s infinite;
+        opacity: 0.6;
+      }
+
+      /* --- 4. Галерея (Стрічка) --- */
+      .gallery-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 50px 20px;
+      }
+
+      /* Стиль "Полароїд" */
+      .polaroid-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 100px;
+        opacity: 0;
+        transform: translateY(50px) rotate(3deg); /* Трохи криво спочатку */
+        transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      /* Чергування нахилу для реалістичності */
+      .polaroid-wrapper:nth-child(even) {
+        transform: translateY(50px) rotate(-3deg);
+      }
+
+      /* Клас, який додається JS при скролі */
+      .polaroid-wrapper.visible {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg) !important; /* Вирівнюється */
+      }
+
+      .polaroid {
+        background: white;
+        padding: 15px 15px 50px 15px; /* Більший відступ знизу для підпису */
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 400px; /* Ширина картки */
+        position: relative;
+        transform: rotate(-1deg);
+        transition: transform 0.3s;
+      }
+
+      .polaroid:hover {
+        transform: scale(1.02) rotate(0deg);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        z-index: 10;
+      }
+
+      .polaroid img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 3/4; /* Портретний формат */
+        object-fit: cover;
+        filter: sepia(10%) contrast(95%); /* Трохи вінтажний фільтр */
+        display: block;
+      }
+
+      /* Скріпка або скотч зверху */
+      .tape {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 30px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-left: 1px dashed rgba(0, 0, 0, 0.1);
+        border-right: 1px dashed rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 2;
+      }
+
+      /* Текст під фото (на самому полароїді) */
+      .caption {
+        font-family: "Caveat", cursive;
+        font-size: 1.8rem;
+        color: #555;
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        left: 0;
+      }
+
+      /* Основний опис поруч або під фото */
+      .story-text {
+        text-align: center;
+        margin-top: 20px;
+        max-width: 400px;
+      }
+      .story-text h2 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: #333;
+      }
+      .story-text p {
+        font-size: 1rem;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      /* --- 5. Фінал (Лист) --- */
+      .letter-section {
+        background: white;
+        padding: 60px 20px;
+        text-align: center;
+        margin-top: 50px;
+        border-top: 1px solid #eee;
+      }
+
+      .paper {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 40px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        border: 1px solid #f0f0f0;
+      }
+
+      .btn-love {
+        background: var(--pink);
+        color: white;
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        cursor: pointer;
+        font-family: "Playfair Display", serif;
+        margin-top: 20px;
+        transition: 0.3s;
+      }
+      .btn-love:hover {
+        background: #e295a0;
+        transform: translateY(-2px);
+      }
+      /* --- 6. Нескінченний фото-флоу (marquee) --- */
+      .photo-stream {
+        position: relative;
+        padding: 70px 0;
+        overflow: hidden;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.6),
+          rgba(255, 255, 255, 0)
+        );
+      }
+
+      .photo-stream .title {
+        max-width: 900px;
+        margin: 0 auto 20px;
+        padding: 0 20px;
+        text-align: center;
+      }
+
+      .photo-stream .title h2 {
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 6px;
+      }
+
+      .photo-stream .title p {
+        margin: 0;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      /* маска, щоб краї були м'які */
+      .photo-stream::before,
+      .photo-stream::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 120px;
+        height: 100%;
+        z-index: 3;
+        pointer-events: none;
+      }
+
+      .photo-stream::before {
+        left: 0;
+        background: linear-gradient(
+          to right,
+          var(--bg-color),
+          rgba(249, 247, 242, 0)
+        );
+      }
+
+      .photo-stream::after {
+        right: 0;
+        background: linear-gradient(
+          to left,
+          var(--bg-color),
+          rgba(249, 247, 242, 0)
+        );
+      }
+
+      /* Трек */
+      .stream-row {
+        position: relative;
+        display: flex;
+        gap: 22px;
+        width: max-content;
+        padding: 14px 20px;
+        will-change: transform;
+        animation: streamMove var(--stream-speed, 100s) linear infinite;
+      }
+
+      /* друга смуга, для "живості" */
+      .stream-row.row-2 {
+        margin-top: 18px;
+        opacity: 0.95;
+        animation-duration: var(--stream-speed-2, 120s);
+        animation-direction: reverse; /* проти першої, виглядає крутіше */
+        transform: translateZ(0);
+      }
+
+      /* Пауза при наведенні (зручно щоб роздивитись) */
+      /* Пауза тільки тоді, коли ховер на конкретній картці */
+      .stream-row:has(.stream-card:hover) {
+        animation-play-state: paused;
+      }
+
+      /* Карточка фото */
+      .stream-card {
+        position: relative;
+        flex: 0 0 auto;
+        width: clamp(220px, 26vw, 320px); /* адекватний розмір, не дрібний */
+        aspect-ratio: 3 / 4;
+        background: #fff;
+        padding: 14px 14px 46px 14px; /* місце під підпис */
+        border: 1px solid rgba(212, 163, 115, 0.35);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        border-radius: 10px;
+        transform: rotate(var(--tilt, -2deg)) translateY(var(--lift, 0px));
+        transition: transform 0.25s ease, box-shadow 0.25s ease,
+          filter 0.25s ease;
+      }
+
+      .stream-card:hover {
+        --lift: -8px;
+        transform: rotate(0deg) translateY(-8px) scale(1.03);
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.14);
+        z-index: 5;
+      }
+
+      .stream-card img {
+        width: 100%;
+        height: 100%;
+        border-radius: 7px;
+        object-fit: cover;
+        display: block;
+        filter: sepia(8%) contrast(96%);
+      }
+
+      .stream-card .label {
+        position: absolute;
+        left: 0;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+        font-family: "Caveat", cursive;
+        font-size: 1.6rem;
+        color: #555;
+        pointer-events: none;
+      }
+
+      /* “скотч” */
+      .stream-card::before {
+        content: "";
+        position: absolute;
+        top: -14px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+        width: 92px;
+        height: 26px;
+        background: rgba(255, 255, 255, 0.65);
+        border-left: 1px dashed rgba(0, 0, 0, 0.1);
+        border-right: 1px dashed rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        border-radius: 6px;
+      }
+
+      /* Рух: зліва -> направо.
+    Ми рухаємо ряд на половину його довжини, бо контент дублюється (A + A).
+  */
+      @keyframes streamMove {
+        from {
+          transform: translateX(calc(-1 * var(--stream-shift, 50%)));
+        }
+        to {
+          transform: translateX(0%);
+        }
+      }
+
+      /* Мобільна корекція */
+      @media (max-width: 480px) {
+        .photo-stream {
+          padding: 55px 0;
+        }
+        .photo-stream::before,
+        .photo-stream::after {
+          width: 70px;
+        }
+        .stream-row {
+          gap: 16px;
+        }
+      }
+
+      /* Анімації */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(10px);
+        }
+      }
+
+      /* Адаптивність */
+      @media (min-width: 768px) {
+        .polaroid-wrapper {
+          flex-direction: row;
+          justify-content: center;
+          gap: 50px;
+        }
+        .polaroid-wrapper:nth-child(even) {
+          flex-direction: row-reverse;
+        }
+        .story-text {
+          text-align: left;
+        }
+        .polaroid-wrapper:nth-child(even) .story-text {
+          text-align: right;
+        }
+        header h1 {
+          font-size: 6rem;
+        }
+      }
+
+      /* --- Kiss Overlay --- */
+      .kiss-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(4px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 220ms ease;
+      }
+      .kiss-overlay.show {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .kiss-big {
+        font-size: clamp(80px, 18vw, 220px);
+        transform: scale(0.7);
+        opacity: 0;
+        animation: kissPop 900ms cubic-bezier(0.2, 0.9, 0.2, 1) forwards;
+        filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.25));
+        user-select: none;
+      }
+
+      .kiss-text {
+        margin-top: 10px;
+        font-family: "Caveat", cursive;
+        font-size: clamp(20px, 4vw, 34px);
+        color: #fff;
+        opacity: 0.95;
+        text-align: center;
+        user-select: none;
+      }
+
+      @keyframes kissPop {
+        0% {
+          transform: scale(0.6);
+          opacity: 0;
+        }
+        35% {
+          transform: scale(1.08);
+          opacity: 1;
+        }
+        60% {
+          transform: scale(0.98);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* --- Falling hearts --- */
+      .hearts-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 9998;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .heart {
+        position: absolute;
+        top: -10vh;
+        font-size: var(--size, 18px);
+        opacity: 0.95;
+        transform: translate3d(0, 0, 0);
+        animation: heartFall var(--dur, 3.5s) linear forwards;
+        filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.18));
+        user-select: none;
+      }
+
+      @keyframes heartFall {
+        0% {
+          transform: translate3d(var(--x, 0px), -10vh, 0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: translate3d(
+              calc(var(--x, 0px) + var(--drift, 0px)),
+              110vh,
+              0
+            )
+            rotate(var(--rot, 360deg));
+          opacity: 0;
+        }
+      }
+
+      /* М'якше на користувачів з reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .heart {
+          animation: none;
+          display: none;
+        }
+        .kiss-big {
+          animation: none;
+          transform: scale(1);
+          opacity: 1;
+        }
+        .kiss-overlay {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <div class="hearts-layer" id="heartsLayer"></div>
+
+  <div class="kiss-overlay" id="kissOverlay" aria-hidden="true">
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+      "
+    >
+      <div class="kiss-big" id="kissBig">💋</div>
+      <div class="kiss-text">Лови поцілунок 😘</div>
+    </div>
+  </div>
+
+  <body>
+    <header>
+      <div class="frame">
+        <p class="handwritten">Для моєї найріднішої</p>
+        <h1>Happy 19</h1>
+        <p class="sub">Ти вже така доросла</p>
+      </div>
+      <div class="scroll-down">↓</div>
+    </header>
+
+    <div class="gallery-container">
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/20.jpg" alt="Baby" />
+          <div class="caption">Дитинство</div>
+        </div>
+        <div class="story-text">
+          <h2>Маленька дівчинка</h2>
+          <p>Ти така маленька, але вже тоді була така мила і радісна.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/21.JPG" alt="Memory" />
+          <div class="caption">Маленька я</div>
+        </div>
+        <div class="story-text">
+          <h2>Перші мрії</h2>
+          <p>Твої очі вже тоді шукали пригоди. І ти їх знаходила всюди.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/22.jpg" alt="School" />
+          <div class="caption">Школа</div>
+        </div>
+        <div class="story-text">
+          <h2>Учениця</h2>
+          <p>Бантики, портфель і перші важливі уроки життя.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/4.jpg" alt="Fun" />
+          <div class="caption">Веселощі</div>
+        </div>
+        <div class="story-text">
+          <h2>Твій сміх</h2>
+          <p>
+            Це фото - доказ того, що ти завжди вміла знайти щось, чому можна
+            радіти. Я обожнюю твій сміх.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/5.jpg" alt="Teen" />
+          <div class="caption">Підліток</div>
+        </div>
+        <div class="story-text">
+          <h2>Пухнастий друг</h2>
+          <p>Ти і Марсік - це два невід'ємних поняття.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/6.jpg" alt="Style" />
+          <div class="caption">Стиль</div>
+        </div>
+        <div class="story-text">
+          <h2>Красуня</h2>
+          <p>Ти ставала все гарнішою з кожним роком. Просто неймовірна.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/7.jpg" alt="Hobby" />
+          <div class="caption">Захоплення</div>
+        </div>
+        <div class="story-text">
+          <h2>Талант</h2>
+          <p>
+            Ти готуєш дуже смачно. При чому все, без виключень. А твої тортики
+            та десерти це окремий вид мистецтва. Неймовірний талант, неймовірний
+            смак.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/8.jpg" alt="Friends" />
+          <div class="caption">Шкільні друзі</div>
+        </div>
+        <div class="story-text">
+          <h2>Моменти</h2>
+          <p>
+            Щасливі миті, які хочеться передивлятись і ностальгувати про те,
+            наскільки раніше було добре.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/9.jpg" alt="Travel" />
+          <div class="caption">Подорожі</div>
+        </div>
+        <div class="story-text">
+          <h2>Світ чекає</h2>
+          <p>
+            Були і подорожі. Море, солона вода, легенький вітерець та твоя
+            посмішка.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/10.jpg" alt="Smile" />
+          <div class="caption">Посмішка</div>
+        </div>
+        <div class="story-text">
+          <h2>Сяйво</h2>
+          <p>
+            Твоя усмішка - я обожнюю коли ти посміхаєшся, навіть якщо так хитро
+            як на фото.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/1488.jpg" alt="Us" />
+          <div class="caption">Ми ❤️</div>
+        </div>
+        <div class="story-text">
+          <h2>Наша ера</h2>
+          <p>
+            Момент, коли все змінилося. Ти і Я. Надзвичайно вдячний долі, що
+            звела нас.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/12.jpg" alt="Love" />
+          <div class="caption">Дуркуємо</div>
+        </div>
+        <div class="story-text">
+          <h2>Тепло</h2>
+          <p>
+            Дякую тобі за те, що ми можемо дуркувати та посміхатись, навіть коли
+            настануть тяжкі часи.
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/13.jpg" alt="Date" />
+          <div class="caption">Побачення</div>
+        </div>
+        <div class="story-text">
+          <h2>Спогади</h2>
+          <p>Пам'ятаєш це фото? Це був найкращий день народження.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/14.jpg" alt="Funny Us" />
+          <div class="caption">Кохання</div>
+        </div>
+        <div class="story-text">
+          <h2>Легкість</h2>
+          <p>Обожнюю, коли ми можемо бути просто самими собою.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/15.jpg" alt="Support" />
+          <div class="caption">Підтримка</div>
+        </div>
+        <div class="story-text">
+          <h2>Ти - сила</h2>
+          <p>
+            Твоя віра в мене надихає, хочу щоб ти знала, що я також в тебе
+            безмежно вірю
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/16.jpg" alt="Beauty" />
+          <div class="caption">Краса</div>
+        </div>
+        <div class="story-text">
+          <h2>Естетика</h2>
+          <p>Просто не можу відірвати від тебе погляд. Гарнюня.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/17.jpg" alt="Current 1" />
+          <div class="caption">Майже 19</div>
+        </div>
+        <div class="story-text">
+          <h2>Впевненість</h2>
+          <p>Ти стала такою дорослою і розумною.Час настільки швидко плине.</p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid">
+          <div class="tape"></div>
+          <img src="./photos/18.jpg" alt="Current 2" />
+          <div class="caption">Найкращі люди</div>
+        </div>
+        <div class="story-text">
+          <h2>Друзі</h2>
+          <p>
+            Подивись, які люди тебе оточують - це найкращі люди у світі. Недарма
+            кажуть: “Скажи мені, хто твої друзі, - і я скажу, хто ти.”
+          </p>
+        </div>
+      </div>
+
+      <div class="polaroid-wrapper">
+        <div class="polaroid" style="transform: rotate(0deg) scale(1.05)">
+          <div class="tape" style="background: #eebbc3"></div>
+          <img src="./photos/19.jpg" alt="19 Years" />
+          <div class="caption" style="color: #d6336c; font-weight: bold">
+            Happy 19! 🎉
+          </div>
+        </div>
+        <div class="story-text">
+          <h2>Сьогодні Твій День!</h2>
+          <p>Ти неймовірна. Ти — мій всесвіт. Тобі 19, не можу повірити!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="letter-section">
+      <div class="paper">
+        <h2 class="handwritten">P.S.</h2>
+        <p>
+          Цей сайт створений для того, щоб ти завжди могла повернутися у ці
+          моменти. Але найкращі моменти у тебе, і у нас, ще попереду.
+        </p>
+        <h1 style="margin-top: 30px; font-size: 2.5rem">Я Тебе Кохаю!</h1>
+        <button class="btn-love" onclick="confettiEffect()">
+          Отримати поцілунок 💋
+        </button>
+      </div>
+    </div>
+    <section class="photo-stream" id="photoStream">
+      <div class="title">
+        <h2>Ще тисячі моментів попереду</h2>
+        <p>Нескінченна стрічка спогадів.</p>
+      </div>
+
+      <!-- Ряд 1 -->
+      <div class="stream-row" data-row="1" aria-label="Фото-стрічка 1"></div>
+
+      <!-- Ряд 2 (опційно, але дуже додає вау-ефект) -->
+      <div
+        class="stream-row row-2"
+        data-row="2"
+        aria-label="Фото-стрічка 2"
+      ></div>
+    </section>
+
+    <script>
+      // Анімація появи карток при скролі
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      document.querySelectorAll(".polaroid-wrapper").forEach((block) => {
+        observer.observe(block);
+      });
+
+      // Простий ефект конфеті при натисканні кнопки в кінці
+
+      function confettiEffect() {
+        // 1) показати великий поцілунок
+        const overlay = document.getElementById("kissOverlay");
+        overlay.classList.add("show");
+
+        // 2) запустити "дощ" із сердечок
+        spawnHearts(1, 1700); // (кількість, тривалість генерації в мс)
+
+        // 3) змінити кнопку (як у тебе було)
+        const btn = document.querySelector(".btn-love");
+        btn.textContent = "Ммм… ще один? 😏";
+        btn.style.background = "#4a4a4a";
+
+        // 4) автозакриття оверлею
+        setTimeout(() => {
+          overlay.classList.remove("show");
+        }, 1400);
+
+        // клік по оверлею — теж закриває
+        overlay.onclick = () => overlay.classList.remove("show");
+      }
+
+      function spawnHearts(count = 60, durationMs = 1200) {
+        const layer = document.getElementById("heartsLayer");
+        if (!layer) return;
+
+        const emojis = ["💗", "💖", "💘", "💞", "💕", "❤️"];
+
+        const start = performance.now();
+
+        function tick(now) {
+          // генеруємо до durationMs
+          if (now - start < durationMs) {
+            // скільки сердечок за кадр (залежить від count)
+            const perFrame = Math.max(1, Math.round(count / 25));
+
+            for (let i = 0; i < perFrame; i++) {
+              const heart = document.createElement("div");
+              heart.className = "heart";
+              heart.textContent =
+                emojis[Math.floor(Math.random() * emojis.length)];
+
+              const x = Math.random() * 100; // vw
+              const size = 14 + Math.random() * 26; // px
+              const dur = 2.2 + Math.random() * 2.8; // s
+              const drift = (Math.random() * 120 - 60).toFixed(1) + "px";
+              const rot = (180 + Math.random() * 540).toFixed(0) + "deg";
+
+              heart.style.left = x + "vw";
+              heart.style.setProperty("--size", size + "px");
+              heart.style.setProperty("--dur", dur + "s");
+              heart.style.setProperty("--drift", drift);
+              heart.style.setProperty("--rot", rot);
+              heart.style.setProperty("--x", "0px");
+
+              layer.appendChild(heart);
+
+              // прибираємо після анімації
+              setTimeout(() => heart.remove(), dur * 1000 + 50);
+            }
+
+            requestAnimationFrame(tick);
+          }
+        }
+
+        requestAnimationFrame(tick);
+      }
+
+      const PHOTO_STREAM = [
+        { src: "./photos/23.jpg", label: "❤️" },
+        { src: "./photos/24.jpg", label: "❤️" },
+        { src: "./photos/25.jpg", label: "❤️" },
+        { src: "./photos/26.jpg", label: "❤️" },
+        { src: "./photos/27.jpg", label: "❤️" },
+        { src: "./photos/28.jpg", label: "❤️" },
+        { src: "./photos/29.jpg", label: "❤️" },
+        { src: "./photos/30.jpg", label: "❤️" },
+        { src: "./photos/31.jpg", label: "❤️" },
+        { src: "./photos/32.jpg", label: "❤️" },
+        { src: "./photos/33.jpg", label: "❤️" },
+        { src: "./photos/34.jpg", label: "❤️" },
+        { src: "./photos/35.jpg", label: "❤️" },
+        { src: "./photos/36.jpg", label: "❤️" },
+        { src: "./photos/37.jpg", label: "❤️" },
+        { src: "./photos/38.jpg", label: "❤️" },
+        { src: "./photos/39.jpg", label: "❤️" },
+        { src: "./photos/40.jpg", label: "❤️" },
+        { src: "./photos/41.jpg", label: "❤️" },
+        { src: "./photos/42.jpg", label: "❤️" },
+        { src: "./photos/43.jpg", label: "❤️" },
+        { src: "./photos/44.jpg", label: "❤️" },
+        { src: "./photos/45.jpg", label: "❤️" },
+        { src: "./photos/46.jpg", label: "❤️" },
+        { src: "./photos/47.jpg", label: "❤️" },
+        { src: "./photos/48.jpg", label: "❤️" },
+        { src: "./photos/49.jpg", label: "❤️" },
+        { src: "./photos/50.jpg", label: "❤️" },
+        { src: "./photos/51.jpg", label: "❤️" },
+        { src: "./photos/52.jpg", label: "❤️" },
+        { src: "./photos/53.jpg", label: "❤️" },
+        { src: "./photos/54.jpg", label: "❤️" },
+        { src: "./photos/55.jpg", label: "❤️" },
+        { src: "./photos/56.jpg", label: "❤️" },
+        { src: "./photos/57.jpg", label: "❤️" },
+        { src: "./photos/58.jpg", label: "❤️" },
+        { src: "./photos/59.jpg", label: "❤️" },
+        { src: "./photos/60.jpg", label: "❤️" },
+        { src: "./photos/61.jpg", label: "❤️" },
+        { src: "./photos/62.jpg", label: "❤️" },
+        { src: "./photos/63.jpg", label: "❤️" },
+        { src: "./photos/64.jpg", label: "❤️" },
+        { src: "./photos/65.jpg", label: "❤️" },
+        { src: "./photos/66.jpg", label: "❤️" },
+        { src: "./photos/67.jpg", label: "❤️" },
+        { src: "./photos/68.jpg", label: "❤️" },
+        { src: "./photos/69.jpg", label: "❤️" },
+        { src: "./photos/70.jpg", label: "❤️" },
+        { src: "./photos/71.jpg", label: "❤️" },
+        { src: "./photos/72.jpg", label: "❤️" },
+        { src: "./photos/73.jpg", label: "❤️" },
+        { src: "./photos/74.jpg", label: "❤️" },
+        { src: "./photos/75.jpg", label: "❤️" },
+        { src: "./photos/76.jpg", label: "❤️" },
+        { src: "./photos/77.jpg", label: "❤️" },
+        { src: "./photos/78.jpg", label: "❤️" },
+        { src: "./photos/79.jpg", label: "❤️" },
+        { src: "./photos/80.jpg", label: "❤️" },
+        { src: "./photos/81.jpg", label: "❤️" },
+        { src: "./photos/82.jpg", label: "❤️" },
+        { src: "./photos/83.jpg", label: "❤️" },
+        { src: "./photos/84.jpg", label: "❤️" },
+        { src: "./photos/85.jpg", label: "❤️" },
+        { src: "./photos/86.jpg", label: "❤️" },
+        { src: "./photos/87.jpg", label: "❤️" },
+        { src: "./photos/88.jpg", label: "❤️" },
+        { src: "./photos/89.jpg", label: "❤️" },
+        { src: "./photos/90.jpg", label: "❤️" },
+        { src: "./photos/91.jpg", label: "❤️" },
+        { src: "./photos/92.jpg", label: "❤️" },
+        { src: "./photos/93.jpg", label: "❤️" },
+        { src: "./photos/94.jpg", label: "❤️" },
+        { src: "./photos/95.jpg", label: "❤️" },
+        { src: "./photos/96.jpg", label: "❤️" },
+        { src: "./photos/97.jpg", label: "❤️" },
+        { src: "./photos/98.jpg", label: "❤️" },
+        { src: "./photos/99.jpg", label: "❤️" },
+        { src: "./photos/100.jpg", label: "❤️" },
+        { src: "./photos/101.jpg", label: "❤️" },
+        { src: "./photos/102.jpg", label: "❤️" },
+        { src: "./photos/103.jpg", label: "❤️" },
+        { src: "./photos/104.jpg", label: "❤️" },
+        { src: "./photos/105.jpg", label: "❤️" },
+        { src: "./photos/106.jpg", label: "❤️" },
+        { src: "./photos/107.jpg", label: "❤️" },
+        { src: "./photos/108.jpg", label: "❤️" },
+        { src: "./photos/109.jpg", label: "❤️" },
+        { src: "./photos/110.jpg", label: "❤️" },
+        { src: "./photos/111.jpg", label: "❤️" },
+        { src: "./photos/112.jpg", label: "❤️" },
+        { src: "./photos/113.jpg", label: "❤️" },
+        { src: "./photos/114.jpg", label: "❤️" },
+        { src: "./photos/115.jpg", label: "❤️" },
+        { src: "./photos/116.jpg", label: "❤️" },
+        { src: "./photos/117.jpg", label: "❤️" },
+        { src: "./photos/118.jpg", label: "❤️" },
+        { src: "./photos/119.jpg", label: "❤️" },
+        { src: "./photos/120.jpg", label: "❤️" },
+        { src: "./photos/121.jpg", label: "❤️" },
+        { src: "./photos/122.jpg", label: "❤️" },
+        { src: "./photos/123.jpg", label: "❤️" },
+
+        // ...далі скільки хочеш
+      ];
+
+      // Якщо фото реально дуже багато — краще не рендерити 500 одразу.
+      // Ліміт на один ряд: ти можеш збільшити.
+      const MAX_PER_ROW = 90;
+
+      function clampStreamPhotos(list, max) {
+        if (!Array.isArray(list) || list.length === 0) return [];
+        if (list.length <= max) return list;
+        return list.slice(0, max);
+      }
+
+      function buildStreamCards(photos, container) {
+        const frag = document.createDocumentFragment();
+
+        photos.forEach((item, i) => {
+          const card = document.createElement("div");
+          card.className = "stream-card";
+
+          // різні нахили, щоб виглядало живо
+          const tilts = [-3, -2, -1, 1, 2, 3];
+          const tilt = tilts[i % tilts.length];
+          card.style.setProperty("--tilt", `${tilt}deg`);
+
+          const img = document.createElement("img");
+          img.src = item.src;
+          img.alt = item.label ? `Фото: ${item.label}` : "Фото";
+          img.loading = "lazy";
+
+          card.appendChild(img);
+
+          if (item.label) {
+            const label = document.createElement("div");
+            label.className = "label";
+            label.textContent = item.label;
+            card.appendChild(label);
+          }
+
+          frag.appendChild(card);
+        });
+
+        container.appendChild(frag);
+      }
+
+      function setupInfiniteRow(rowEl, photos) {
+        // 1) очищаємо
+        rowEl.innerHTML = "";
+
+        // 2) робимо два однакових набори (A + A) для безшовного лупа
+        buildStreamCards(photos, rowEl);
+        buildStreamCards(photos, rowEl);
+
+        // 3) Обчислюємо, на яку відстань треба "зсувати" (половина контенту)
+        //    (тобто довжина першого набору A)
+        requestAnimationFrame(() => {
+          const totalWidth = rowEl.scrollWidth; // A + A
+          const half = totalWidth / 2;
+          // Зсув = половина, а анімація йде до 0
+          rowEl.style.setProperty("--stream-shift", `${half}px`);
+        });
+      }
+
+      (function initPhotoStream() {
+        const section = document.getElementById("photoStream");
+        if (!section) return;
+
+        const row1 = section.querySelector('.stream-row[data-row="1"]');
+        const row2 = section.querySelector('.stream-row[data-row="2"]');
+
+        // якщо мало фото — дублюємо список, щоб виглядало щільно
+        let base = PHOTO_STREAM.slice();
+        if (base.length > 0 && base.length < 8) {
+          base = base.concat(base, base); // підсилюємо для гарного потоку
+        }
+
+        const photosRow1 = clampStreamPhotos(base, MAX_PER_ROW);
+        const photosRow2 = clampStreamPhotos(
+          base.slice().reverse(),
+          MAX_PER_ROW
+        );
+
+        setupInfiniteRow(row1, photosRow1);
+        setupInfiniteRow(row2, photosRow2);
+
+        // Перерахунок при зміні розміру екрана (важливо для мобільних)
+        let resizeTimer = null;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(() => {
+            setupInfiniteRow(row1, photosRow1);
+            setupInfiniteRow(row2, photosRow2);
+          }, 150);
+        });
+      })();
+    </script>
+  </body>
+</html>
